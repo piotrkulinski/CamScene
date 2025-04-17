@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="multi.ico">resources/icons/multi.png</file>
+    </qresource>
+</RCC>
