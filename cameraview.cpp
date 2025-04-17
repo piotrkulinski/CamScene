@@ -18,9 +18,6 @@ void CameraView::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         // Przekształć pozycję kursora z widoku do sceny
         QPointF scenePos = mapToScene(event->pos());
-        //QRectF imageBounds = m_imageItem->boundingRect();
-        //scenePos = scenePos.intersected(imageBounds);
-
         QGraphicsItem *item = scene()->itemAt(scenePos, transform());
 
         // Jeśli kliknięto w RegionA, nie przechwytuj zdarzenia — RegionA sobie
@@ -41,7 +38,6 @@ void CameraView::mouseMoveEvent(QMouseEvent *event) {
     if (m_drawing) {
         m_endDrawPos = event->pos();
         update();
-        //return;
     }
     QGraphicsView::mouseMoveEvent(event);
 }
@@ -50,13 +46,13 @@ void CameraView::mouseReleaseEvent(QMouseEvent *event) {
     if (m_drawing) {
         m_drawing = false;
         m_endDrawPos = event->pos();
-        if (m_imageItem) {
+        if (filmFrame) {
             QRectF rect(mapToScene(m_startDrawPos), mapToScene(m_endDrawPos));
             rect = rect.normalized(); // Zapewniamy poprawny kierunek prostokąta
 
-            // // Ogranicz do rozmiaru obrazu
-            // QRectF imageBounds = m_imageItem->boundingRect();
-            // rect = rect.intersected(imageBounds);
+            // Ogranicz do rozmiaru obrazu
+            QRectF imageBounds = filmFrame->boundingRect();
+            rect = rect.intersected(imageBounds);
 
             // Minimalny rozmiar
             if (rect.width() < 50 || rect.height() < 50)
@@ -65,7 +61,7 @@ void CameraView::mouseReleaseEvent(QMouseEvent *event) {
             // Minimalne wymiary 50x50
             // if (rect.width() >= 50 && rect.height() >= 50) {
             RegionA *region = new RegionA(rect);
-            region->setPen(QPen(Qt::red, 2));
+            region->setPen(QPen(Qt::blue, 2));
             region->setBrush(QBrush(QColor(255, 0, 0, 30)));
             region->setZValue(1); // ponad wideo
             scene()->addItem(region);

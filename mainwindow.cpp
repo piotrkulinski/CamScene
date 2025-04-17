@@ -46,42 +46,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::nextFrame);
     timer->start(1000 / fps);
 
-    rect = new RegionA(QRectF(150, 150, 150, 150));
-    rect->setPen(QPen(Qt::red));
-    rect->setBrush(QBrush(QColor(255, 0, 0, 30)));
-    //rect->setBrush(QBrush(Qt::transparent));
-    rect->setZValue(1); // ponad wideo
-    scene->addItem(rect);
-
-    // QGraphicsEllipseItem *ellipse = scene->addEllipse(50, 50, 100, 60, QPen(Qt::blue), QBrush(Qt::cyan));
-    // ellipse->setFlag(QGraphicsItem::ItemIsMovable);
-
-    // QGraphicsTextItem *label = scene->addText("To jest elipsa");
-    // label->setDefaultTextColor(Qt::black);
-    // label->setPos(60, 55);
-    // label->setZValue(2);
-
-    // // Tworzymy punkty trójkąta
-    // QPolygonF triangle;
-    // triangle << QPointF(100, 100)   // Punkt A
-    //          << QPointF(150, 50)    // Punkt B
-    //          << QPointF(200, 100)   // Punkt C
-    //          << QPointF(100, 100);  // Zamknięcie konturu
-
-    // // Tworzymy obiekt i dodajemy do sceny
-    // QGraphicsPolygonItem *polygonItem = new QGraphicsPolygonItem(triangle);
-    // polygonItem->setBrush(QBrush(Qt::yellow));
-    // polygonItem->setPen(QPen(Qt::black, 2));
-    // polygonItem->setFlag(QGraphicsItem::ItemIsMovable); // Można przesuwać
-    // polygonItem->setFlag(QGraphicsItem::ItemIsSelectable); // Można zaznaczyć
-    // polygonItem->setZValue(3);
-    // scene->addItem(polygonItem);
-
-    // QPolygonF polygon;
-    // polygon << QPointF(100, 100) << QPointF(150, 80) << QPointF(200, 120);
-    // auto* polyItem = new PolygonItem(polygon);
-    // scene->addItem(polyItem);
-
     ui->rightMenu->setIconSize(QSize(32, 32));
     ui->rightMenu->addItem("Śledź region");
     ui->rightMenu->addItem("Wyłącz region");

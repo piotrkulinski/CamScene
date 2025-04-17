@@ -53,7 +53,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(CamScene
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        Region.h RegionA.h
+        RegionA.h
         polygonitem.h polygonitem.cpp
         Resources.qrc
         cameraview.h cameraview.cpp

@@ -16,8 +16,8 @@ public:
     explicit CameraView(QWidget *parent = nullptr);
     ~CameraView() override;
     void setImageItem(QGraphicsPixmapItem* item) {
-        m_imageItem = item;
-        fitInView(m_imageItem, Qt::KeepAspectRatio);
+        filmFrame = item;
+        fitInView(filmFrame, Qt::KeepAspectRatio);
     }
 
 signals:
@@ -36,7 +36,7 @@ private:
     QPoint m_endDrawPos;
     RegionA *m_dragItem = nullptr;
     QPoint m_dragStartPos;
-    QGraphicsPixmapItem* m_imageItem;
+    QGraphicsPixmapItem* filmFrame;
 };
 
 #endif // CAMERAVIEW_H
