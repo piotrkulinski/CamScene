@@ -47,6 +47,9 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    IFrameAnalyzer.h
+    MotionDetector.h
+    CarLicensePlateDetector.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -58,6 +61,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Resources.qrc
         cameraview.h cameraview.cpp
         regioncaption.h regioncaption.cpp
+        CameraSetup.ui
+        IFrameAnalyzer.h
+        MotionDetector.h
+        CarLicensePlateDetector.h
     )
 else()
     if(ANDROID)

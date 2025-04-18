@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/icons">
         <file alias="multi.ico">resources/icons/multi.png</file>
+        <file alias="youtube.png">resources/icons/youtube.png</file>
+        <file alias="youtube.ico">resources/icons/youtube.ico</file>
     </qresource>
 </RCC>

@@ -9,10 +9,19 @@ CameraView::CameraView(QWidget *parent) : QGraphicsView(parent) {
     setRenderHint(QPainter::Antialiasing);
     setRenderHint(QPainter::SmoothPixmapTransform);
     setDragMode(QGraphicsView::RubberBandDrag); // Umożliwia rysowanie prostokąta
-        // przez przeciąganie
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    // przez przeciąganie
 }
 
-CameraView::~CameraView() {}
+CameraView::~CameraView() {
+    for (QGraphicsItem *item : this->scene()->items()) {
+        RegionA *region = dynamic_cast<RegionA *>(item);
+        if (region && region->isActive()) {
+            region->stopMonitoring();
+        }
+    }
+}
 
 void CameraView::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
@@ -43,6 +52,7 @@ void CameraView::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void CameraView::mouseReleaseEvent(QMouseEvent *event) {
+    static int id = 0;
     if (m_drawing) {
         m_drawing = false;
         m_endDrawPos = event->pos();
@@ -54,21 +64,19 @@ void CameraView::mouseReleaseEvent(QMouseEvent *event) {
             QRectF imageBounds = filmFrame->boundingRect();
             rect = rect.intersected(imageBounds);
 
-            // Minimalny rozmiar
-            if (rect.width() < 50 || rect.height() < 50)
-                return; // Za mały - nie dodajemy
-
             // Minimalne wymiary 50x50
-            // if (rect.width() >= 50 && rect.height() >= 50) {
-            RegionA *region = new RegionA(rect);
-            region->setPen(QPen(Qt::blue, 2));
-            region->setBrush(QBrush(QColor(255, 0, 0, 30)));
-            region->setZValue(1); // ponad wideo
-            scene()->addItem(region);
-            //}
-
+            if (rect.width() >= 50 && rect.height() >= 50) {
+                RegionA *region = new RegionA(rect, QString("Region %1").arg(++id));
+                region->setPen(QPen(Qt::blue, 2));
+                region->setBrush(QBrush(QColor(255, 0, 0, 30)));
+                region->setZValue(1); // ponad wideo
+                region->setParentItem(
+                    this->filmFrame); // potrzebne do przeskalownia zaznaczenia na
+                    // realny rozmiar kadru
+                scene()->addItem(region);
+            }
             return; // Nie przekazujemy dalej
-    }
+        }
     }
 
     QGraphicsView::mouseReleaseEvent(event);

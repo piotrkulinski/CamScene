@@ -25,9 +25,8 @@ public:
     }
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override {
-        //painter->setBrush(QColor(30, 30, 150));  // Tło
-        painter->setBrush(QBrush(QColor(30, 30, 150, 90)));
-        painter->setPen(QPen(Qt::yellow, 1));    // Obramowanie
+        painter->setBrush(brush);
+        painter->setPen(pen);    // Obramowanie
         painter->drawRoundedRect(boundingRect(), 6, 6);
     }
 
@@ -36,9 +35,27 @@ public:
         prepareGeometryChange();
     }
 
+    QString getText() const {
+        return m_text->toPlainText();
+    }
+    void setPen(const QPen& _pen = QPen(Qt::yellow, 1)) {
+        pen = _pen;
+    }
+
+    void setBrush(const QBrush& _brush = QBrush(QColor(30, 30, 150, 90))) {
+        brush = _brush;
+    }
+
+    void setDefault() {
+        setPen();
+        setBrush();
+        update();
+    }
 private:
     QGraphicsTextItem *m_text;
     qreal m_margin;
+    QPen pen{QPen(Qt::yellow, 1)};
+    QBrush brush {QBrush(QColor(30, 30, 150, 90))};
 };
 
 #endif // REGIONCAPTION_H
